@@ -1,0 +1,5 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://mheitzmann1:1234@cluster0.ssf4spi.mongodb.net/?retryWrites=true&w=majority
+      database: PatientAssessment
