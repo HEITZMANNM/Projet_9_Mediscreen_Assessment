@@ -10,7 +10,6 @@ import java.util.List;
 public interface PatientAssessmentRepository extends MongoRepository<PatientAssessment, String> {
 
 
-    List<PatientAssessment> findByStatus(String status);
     List<PatientAssessment> findByPatientId(int patientId);
 
 }

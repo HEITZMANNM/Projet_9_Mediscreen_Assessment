@@ -25,7 +25,7 @@ public class PatientAssessmentController {
         return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
 
-    @PutMapping("/assessment/update")
+    @PutMapping("/assessment/upDate")
     public void updateAssessment(@RequestBody PatientAssessment patientAssessmentToUpdate){
 
         patientAssessmentService.upDateAssessment(patientAssessmentToUpdate);
@@ -49,11 +49,6 @@ public class PatientAssessmentController {
         return patientAssessmentService.getAssessmentByPatientId(patientId);
     }
 
-    @GetMapping("/assessment/getByStatus")
-    public List<PatientAssessment> getAllPatientAssessmentsByStatus(@RequestParam(name = "status") String status){
-
-        return patientAssessmentService.getByStatus(status);
-    }
 
     @DeleteMapping("/assessment/delete")
     public void deleteAssessment(@RequestParam(name = "id") String id){

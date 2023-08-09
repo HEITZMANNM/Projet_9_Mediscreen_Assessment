@@ -13,7 +13,6 @@ public interface PatientAssessmentService {
 
     PatientAssessment getAssessmentById(String id);
 
-    List<PatientAssessment> getByStatus(String status);
 
     void upDateAssessment(PatientAssessment patientAssessment);
 

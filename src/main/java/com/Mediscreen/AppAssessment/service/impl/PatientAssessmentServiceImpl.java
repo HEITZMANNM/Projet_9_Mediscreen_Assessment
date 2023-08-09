@@ -75,19 +75,6 @@ public class PatientAssessmentServiceImpl implements PatientAssessmentService {
         return patientAssessment;
     }
 
-    @Override
-    public List<PatientAssessment> getByStatus(String status){
-
-        List<PatientAssessment> list = new ArrayList<>();
-        try{
-            list = patientAssessmentRepository.findByStatus(status);
-            log.info("The list of assessments was fetch!");
-        }
-        catch (Exception ex){
-            log.error("Error to fetch the list of assessments");
-        }
-        return list;
-    }
 
     @Override
     public void upDateAssessment(PatientAssessment patientAssessment){
@@ -98,7 +85,6 @@ public class PatientAssessmentServiceImpl implements PatientAssessmentService {
 
             //populate new value from the assessment to existing assessment object
             patientAssessmentExpected.setAssessment(patientAssessment.getAssessment());
-            patientAssessmentExpected.setStatus(patientAssessment.getStatus());
 
             patientAssessmentRepository.save(patientAssessmentExpected);
             log.info("The patient's assessment was update");
