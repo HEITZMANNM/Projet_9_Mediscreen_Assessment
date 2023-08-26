@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 public class PatientAssessmentController {
     @Autowired
     private PatientAssessmentService patientAssessmentService;
@@ -26,33 +27,74 @@ public class PatientAssessmentController {
     }
 
     @PutMapping("/assessment/upDate")
-    public void updateAssessment(@RequestBody PatientAssessment patientAssessmentToUpdate){
+    public ResponseEntity updateAssessment(@RequestBody PatientAssessment patientAssessmentToUpdate){
 
-        patientAssessmentService.upDateAssessment(patientAssessmentToUpdate);
+        PatientAssessment patientAssessmentExpected = patientAssessmentService.getAssessmentById(patientAssessmentToUpdate.getId());
+
+        if(patientAssessmentExpected.getAssessment() != null)
+        {
+            patientAssessmentService.upDateAssessment(patientAssessmentToUpdate);
+            return  new ResponseEntity(HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/assessment/all")
-    public List<PatientAssessment> getAllPatientAssessments(){
+    public ResponseEntity getAllPatientAssessments(){
 
-        return patientAssessmentService.getAllAssessments();
+        List<PatientAssessment> list = patientAssessmentService.getAllAssessments();
+        if (list.size() != 0)
+        {
+            return new ResponseEntity(list, HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/assessment/getById")
-    public PatientAssessment getPatientAssessmentById(@RequestParam(name = "id") String id){
+    public ResponseEntity getPatientAssessmentById(@RequestParam(name = "id") String id){
 
-        return patientAssessmentService.getAssessmentById(id);
+        PatientAssessment patientAssessment = patientAssessmentService.getAssessmentById(id);
+
+        if(patientAssessment.getAssessment() != null)
+        {
+            return new ResponseEntity<>(patientAssessment, HttpStatus.OK);
+        }
+       else {
+           return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/assessment/getByPatientId")
-    public List<PatientAssessment> getPatientAssessmentByPatientId(@RequestParam(name = "patientId") int patientId){
+    public ResponseEntity getPatientAssessmentByPatientId(@RequestParam(name = "patientId") int patientId){
 
-        return patientAssessmentService.getAssessmentByPatientId(patientId);
+        List<PatientAssessment> list = patientAssessmentService.getAssessmentByPatientId(patientId);
+
+        if(list.size() != 0)
+        {
+            return new ResponseEntity(list, HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
     }
 
 
     @DeleteMapping("/assessment/delete")
-    public void deleteAssessment(@RequestParam(name = "id") String id){
+    public ResponseEntity deleteAssessment(@RequestParam(name = "id") String id){
 
-        patientAssessmentService.deleteAssessment(id);
+        PatientAssessment patientAssessment = patientAssessmentService.getAssessmentById(id);
+
+        if (patientAssessment != null)
+        {
+            patientAssessmentService.deleteAssessment(id);
+            return new ResponseEntity(HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
     }
 }

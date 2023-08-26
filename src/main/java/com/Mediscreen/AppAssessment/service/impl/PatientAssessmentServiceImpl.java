@@ -23,6 +23,7 @@ public class PatientAssessmentServiceImpl implements PatientAssessmentService {
 
         boolean answer = false;
         try{
+            patientAssessment.setId(UUID.randomUUID().toString());
             patientAssessmentRepository.save(patientAssessment);
             answer = true;
             log.info("the assessment was saved!");

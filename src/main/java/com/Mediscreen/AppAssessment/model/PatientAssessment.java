@@ -17,6 +17,7 @@ import java.util.Objects;
 @NoArgsConstructor
 public class PatientAssessment {
 
+
     @Id
     private String id;
 
